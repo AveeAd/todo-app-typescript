@@ -3,7 +3,7 @@ import Filter from "./components/Filter";
 import Header from "./components/Header";
 import TodoList from "./components/TodoList";
 import styled from '@emotion/styled';
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 const Todos:{id:number,text:string,completed:boolean}[] = [
   {
@@ -36,12 +36,17 @@ const Todos:{id:number,text:string,completed:boolean}[] = [
 function App() {
 
   const [allTodos,setAllTodos] = useState([...Todos]);
-  const [activeTodos,setActiveTodos] = useState(Todos.filter(todo=>!todo.completed));
-  const [completedTodos,setCompletedTodos] = useState(Todos.filter(todo=>todo.completed));
+  const [activeTodos,setActiveTodos] = useState(allTodos.filter(todo=>!todo.completed));
+  const [completedTodos,setCompletedTodos] = useState(allTodos.filter(todo=>todo.completed));
   const [filter,setFilter] = useState("all");
   const addTodo = (text:string) => {
-    setAllTodos(prev=>[...prev,{id:Math.floor(Math.random()*100),text,completed:false}])
+    setAllTodos(prev=>[...prev,{id:Math.floor(Math.random()*100),text,completed:false}]);
   }
+
+  useEffect(() => {
+    setActiveTodos(allTodos.filter(todo=>!todo.completed));
+    setCompletedTodos(allTodos.filter(todo=>todo.completed));
+  },[allTodos]);
 
   return (
     <Container>

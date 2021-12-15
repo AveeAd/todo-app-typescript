@@ -4,6 +4,7 @@ const Todo = (props:any) => {
   const [isCompleted,setIsCompleted]=useState(props.todo.completed);
   const handleCheck = () => {
     setIsCompleted(!isCompleted);
+    
   }
   return (
     <Container>
