@@ -4,7 +4,6 @@ import Header from "./components/Header";
 import TodoList from "./components/TodoList";
 import styled from '@emotion/styled';
 import { useState } from "react";
-import { randomUUID } from "crypto";
 
 const Todos:{id:number,text:string,completed:boolean}[] = [
   {
@@ -36,18 +35,20 @@ const Todos:{id:number,text:string,completed:boolean}[] = [
 
 function App() {
 
-  const [todos,setTodos] = useState([...Todos]);
-
+  const [allTodos,setAllTodos] = useState([...Todos]);
+  const [activeTodos,setActiveTodos] = useState(Todos.filter(todo=>!todo.completed));
+  const [completedTodos,setCompletedTodos] = useState(Todos.filter(todo=>todo.completed));
+  const [filter,setFilter] = useState("all");
   const addTodo = (text:string) => {
-    setTodos(prev=>[...prev,{id:Math.floor(Math.random()*100),text,completed:false}])
+    setAllTodos(prev=>[...prev,{id:Math.floor(Math.random()*100),text,completed:false}])
   }
 
   return (
     <Container>
       <Header />
       <AddTodo addTodo={addTodo} />
-      <TodoList todos={todos} />
-      <Filter />
+      <TodoList todos={filter==="all"?allTodos:(filter==="active"?activeTodos:completedTodos)} />
+      <Filter setFilter={setFilter} />
     </Container>
   );
 }

@@ -1,11 +1,27 @@
 import styled from "@emotion/styled"
-const Filter = () => {
+const Filter = (props:any) => {
+  const filterHandler = (e:any) => {
+    switch(e.target.innerText) {
+      case "All":
+        props.setFilter("all");
+        break;
+      case "Active":
+        props.setFilter("active");
+        break;
+      case "Completed":
+        props.setFilter("completed");
+        break;
+      default:
+        props.setFilter("all");
+        break;
+    }
+  }
   return (
     <Container>
       <span>Show:</span>
-      <Button>All</Button>
-      <Button>Active</Button>
-      <Button>Completed</Button>
+      <Button onClick={filterHandler}>All</Button>
+      <Button onClick={filterHandler}>Active</Button>
+      <Button onClick={filterHandler}>Completed</Button>
       
     </Container>
   )
